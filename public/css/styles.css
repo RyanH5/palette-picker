@@ -1,0 +1,25 @@
+/* APP COLOR PALETTE */
+/* Dark Brown #32292f */
+/* Light teal #99E1D9 */
+/* Off-white #F0F7F4 */
+/* Dark-teal #70ABAF */
+/* Light brown #705D56 */
+body {
+  background-color: #F0F7F4;
+}
+header {
+  background-color: #70ABAF
+}
+.app--title {
+  text-align: center;
+  color: #32292F;
+  font-family: 'Gorditas', cursive;
+  padding: 15px;
+  font-size: 50px;
+}
+
+.palette--generator-btn{
+  background-color: #99E1D9;
+  color: #705D56;
+}
+
