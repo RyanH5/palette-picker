@@ -2,6 +2,8 @@ const paletteGeneratorBtn = document.getElementById("palette--generator-btn");
 const savePaletteBtn = document.getElementById("palette--save-btn");
 const unLockedLock = document.querySelectorAll('.unlocked');
 const colorPossibilities = document.querySelectorAll('.color--palette-possibility');
+const colorHexs = document.querySelectorAll('.color-hex');
+
 
 // unLockedLock.addEventListener("click", toggleLockColor);
 
@@ -25,7 +27,7 @@ const createColorPalette = () => {
   }
   for(var i = 0; i < 5; i++) {
     colorPossibilities[i].style.backgroundColor = colorList[i];
-    colorPossibilities[i].innerHTML = colorList[i];
+    colorHexs[i].innerHTML = colorList[i];
   }
 }
 
