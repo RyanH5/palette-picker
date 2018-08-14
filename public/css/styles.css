@@ -1,0 +1,111 @@
+body {
+  background-color: #F0F7F4;
+}
+
+header {
+  background-color: #70ABAF
+}
+
+.app--title {
+  text-align: center;
+  color: #705D56;
+  font-family: 'Gorditas', cursive;
+  padding: 15px;
+  font-size: 50px;
+}
+
+.color--splotches-container {
+  display: flex;
+  padding: 50px;
+  justify-content: center;
+}
+
+.color--palette-possibility {
+  border: 2px solid #705D56;
+  width: 20%;
+  max-width:150px;
+  height: 150px;
+  position: relative;
+}
+
+.generator--btn-container {
+  text-align: center;
+}
+
+.color-hex {
+  font-family: 'Kanit', sans-serif;
+  position: absolute;
+  bottom: -20px;
+  left: 3px;
+  color: #705D56;
+}
+
+.lock {
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+  height: 25px;
+}
+
+.locked {
+  display: none;
+}
+
+.palette--generator-btn {
+  background-color: #99E1D9;
+  color: #705D56;
+  padding: 10px;
+  font-size: 20px;
+  font-family: 'Gorditas', cursive;  
+}
+
+.palette--naming-form {
+  /* width: 250px; */
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.palette--naming-input {
+  width: 148px;
+}
+
+.save--btn {
+  font-family: 'Kanit', sans-serif;
+  background-color: #99E1D9;
+  color: #705D56;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.projects--dropdown {
+  height: 33px;
+  margin-right: 8px;
+}
+
+hr {
+  color: #32292F;
+  height: 1px;
+  border-top: 2px solid #70ABAF;
+  border-bottom: 2px solid #70ABAF;
+}
+
+/* NEW PROJECT SECTION */
+.new--project-form {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin: auto;
+}
+
+.create--project-subheading {
+  text-align: center;
+  color: #32292F;
+  font-family: 'Gorditas', cursive;
+  padding: 15px;
+  font-size: 28px;
+}
+
+.project--naming-input {
+  padding: 9px 0px;
+}
