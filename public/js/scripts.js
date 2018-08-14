@@ -4,10 +4,10 @@ const unLockedLock = document.querySelectorAll('.unlocked');
 const colorPossibilities = document.querySelectorAll('.color--palette-possibility');
 const colorHexs = document.querySelectorAll('.color-hex');
 
+paletteGeneratorBtn.addEventListener("click", createColorPalette);
+window.onload = createColorPalette();
 
-// unLockedLock.addEventListener("click", toggleLockColor);
-
-const generateRandomColor = () => {
+function generateRandomColor() {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
   var newColor = "#";
   
@@ -19,7 +19,7 @@ const generateRandomColor = () => {
   return newColor;
 }
 
-const createColorPalette = () => {
+function createColorPalette() {
   const colorList = [];
   for(var i = 1; i < 6; i++) {
     let newColor = generateRandomColor();
@@ -30,12 +30,3 @@ const createColorPalette = () => {
     colorHexs[i].innerHTML = colorList[i];
   }
 }
-
-
-const toggleLockColor = () => {
-}
-
-unLockedLock.forEach(lock => lock.addEventListener('click', toggleLockColor))
-
-
-paletteGeneratorBtn.addEventListener("click", createColorPalette);

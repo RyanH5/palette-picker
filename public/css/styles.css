@@ -12,7 +12,7 @@ header {
 }
 .app--title {
   text-align: center;
-  color: #32292F;
+  color: #705D56;
   font-family: 'Gorditas', cursive;
   padding: 15px;
   font-size: 50px;
@@ -32,31 +32,6 @@ header {
   position: relative;
 }
 
-#first--color-possibility {
-  background-color: #F0d3F4;
-
-}
-
-#second--color-possibility {
-  background-color: #a0F7F4;
-  
-}
-
-#third--color-possibility {
-  background-color: #c0F3F4;
-  
-}
-
-#fourth--color-possibility {
-  background-color: #F0F7F4;
-  
-}
-
-#fifth--color-possibility {
-  background-color: #F7F4;
-  
-}
-
 .generator--btn-container {
   text-align: center;
 }
@@ -64,13 +39,16 @@ header {
 .color-hex {
   font-family: 'Kanit', sans-serif;
   position: absolute;
-  bottom: 0;
+  bottom: 3px;
+  left: 3px;
+  color: #705D56;
 }
 
 .unlocked {
   position: absolute;
-  bottom: 0;
+  bottom: 3px;
   right: 0;
+  height: 25px;
 }
 
 .palette--generator-btn {
