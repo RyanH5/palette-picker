@@ -1,5 +1,9 @@
 const paletteGeneratorBtn = document.getElementById("palette--generator-btn");
 const savePaletteBtn = document.getElementById("palette--save-btn");
+const unLockedLock = document.querySelectorAll('.unlocked');
+const colorPossibilities = document.querySelectorAll('.color--palette-possibility');
+
+// unLockedLock.addEventListener("click", toggleLockColor);
 
 const generateRandomColor = () => {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
@@ -10,10 +14,7 @@ const generateRandomColor = () => {
     let y = hexValues[x];
     newColor += y;
   }
-
-  // return newColor;
-  document.getElementById("first--color-possibility").style.backgroundColor = newColor;
-  document.getElementById("first--color-hex").innerHTML = newColor;
+  return newColor;
 }
 
 const createColorPalette = () => {
@@ -21,9 +22,18 @@ const createColorPalette = () => {
   for(var i = 1; i < 6; i++) {
     let newColor = generateRandomColor();
     colorList.push(newColor);
-    }
-  console.log(colorList)
+  }
+  for(var i = 0; i < 5; i++) {
+    colorPossibilities[i].style.backgroundColor = colorList[i];
+    colorPossibilities[i].innerHTML = colorList[i];
+  }
 }
+
+
+const toggleLockColor = () => {
+}
+
+unLockedLock.forEach(lock => lock.addEventListener('click', toggleLockColor))
 
 
 paletteGeneratorBtn.addEventListener("click", createColorPalette);
