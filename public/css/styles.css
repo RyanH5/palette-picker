@@ -1,15 +1,11 @@
-/* APP COLOR PALETTE */
-/* Dark Brown #32292f */
-/* Light teal #99E1D9 */
-/* Off-white #F0F7F4 */
-/* Dark-teal #70ABAF */
-/* Light brown #705D56 */
 body {
   background-color: #F0F7F4;
 }
+
 header {
   background-color: #70ABAF
 }
+
 .app--title {
   text-align: center;
   color: #705D56;
@@ -39,16 +35,20 @@ header {
 .color-hex {
   font-family: 'Kanit', sans-serif;
   position: absolute;
-  bottom: 3px;
+  bottom: -20px;
   left: 3px;
   color: #705D56;
 }
 
-.unlocked {
+.lock {
   position: absolute;
   bottom: 3px;
   right: 0;
   height: 25px;
+}
+
+.locked {
+  display: none;
 }
 
 .palette--generator-btn {
@@ -91,13 +91,13 @@ hr {
 }
 
 /* NEW PROJECT SECTION */
-
 .new--project-form {
   display: flex;
   flex-direction: column;
   width: 320px;
   margin: auto;
 }
+
 .create--project-subheading {
   text-align: center;
   color: #32292F;
