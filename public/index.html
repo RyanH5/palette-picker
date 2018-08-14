@@ -5,6 +5,7 @@
   <title>Palette Picker</title>
   <link rel="stylesheet" type="text/css" href="./css/reset.css">
   <link href="https://fonts.googleapis.com/css?family=Gorditas:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Gorditas|Kanit" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
 <body>
@@ -12,15 +13,39 @@
     <h1 class="app--title">Palette Picker</h1>
   </header>
   <section class="palette--generation-area">
-    <div>
-      <article class="color--palette-possibility" id="first--color-possibility"></article>
-      <article class="color--palette-possibility" id="second--color-possibility"></article>
-      <article class="color--palette-possibility" id="third--color-possibility"></article>
-      <article class="color--palette-possibility" id="fourth--color-possibility"></article>
-      <article class="color--palette-possibility" id="fifth--color-possibility"></article>
+    <div class="color--splotches-container">
+      <article class="color--palette-possibility" id="first--color-possibility">
+        <span id="first--color-hex" class="color-hex"></span>
+        <img src="resources/unlocked-lock.svg" class="unlocked"/>
+      </article>
+      <article class="color--palette-possibility" id="second--color-possibility">
+        <span id="second--color-hex" class="color-hex">#6D4F7G</span>
+        <img src="resources/unlocked-lock.svg" class="unlocked"/>
+      </article>
+      <article class="color--palette-possibility" id="third--color-possibility">
+        <span id="third--color-hex" class="color-hex"></span>
+        <img src="resources/unlocked-lock.svg" class="unlocked"/>
+      </article>
+      <article class="color--palette-possibility" id="fourth--color-possibility">
+        <span id="fourth--color-hex" class="color-hex"></span>
+        <img src="resources/unlocked-lock.svg" class="unlocked"/>
+      </article>
+      <article class="color--palette-possibility" id="fifth--color-possibility">
+        <span id="fifth--color-hex" class="color-hex"></span>
+        <img src="resources/unlocked-lock.svg" class="unlocked"/>
+      </article>
     </div>
-    <button class="palette--generator-btn">Generate New Palette!</button>
-    <form>
+    <div class="generator--btn-container">
+      <button 
+        id="palette--generator-btn"
+        class="palette--generator-btn">Generate New Palette!</button>
+    </div>
+    <form class="palette--naming-form">
+      <div class="dropdown--container">
+        <select class="projects--dropdown">
+            <option value="0">Select Project:</option>
+        </select>
+      </div>
       <input 
         type="text"
         class="palette--naming-input"
@@ -32,8 +57,16 @@
   </section>
   <hr>
   <section class="projects--display-area">
-
+    <div class="new--project-form">
+      <h3 class="create--project-subheading">Create a new project:</h3>
+        <input
+          type="text"
+          placeholder="New project name"
+          class="project--naming-input"
+        />
+        <button class="save--btn" id="project--save-btn">Save Project</button>
+    </div>
   </section>
-  
+  <script src="./js//scripts.js"></script>
 </body>
 </html>
