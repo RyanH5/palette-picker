@@ -16,27 +16,40 @@ function generateRandomColor() {
   }
   return newColor;
 }
-
+var colorList;
 function createColorPalette(event) {
+  colorList = [];
   const colorHexs = document.querySelectorAll('.color-hex');
-  const colorList = [];
   for(var i = 1; i < 6; i++) {
     let newColor = generateRandomColor();
-    colorList.push(newColor);
+    colorList.push({
+      color: newColor,
+      saved: false
+    });
     // save as array of objects with color and saved = false
   }
   for(var i = 0; i < 5; i++) {
-    $('.color--palette-possibility')[i].style.backgroundColor = colorList[i];
-    colorHexs[i].innerHTML = colorList[i];
+    $('.color--palette-possibility')[i].style.backgroundColor = colorList[i].color;
+    colorHexs[i].innerHTML = colorList[i].color;
   }
 }
-
-function storeSelectedColor() {
-  toggleLock();
-}
-
-function toggleLock() {
-  $(".lock").each(function() {
-    $(this).toggleClass("locked");
+function storeSelectedColor(event) {
+  event.stopPropagation();
+  colorList.forEach(color => {
+    if (color.color === event.target.innerText) {
+      // console.log(this.children)
+      $(this).children('.lock').toggleClass('locked')
+      // console.log(event.target.children('.locked'))
+      color.saved = !color.saved
+    }
+    // toggleLock();
   })
+
 }
+function toggleLock() {
+  // ONLY toggle targeted lock
+  // $(".lock").each(function() {
+    $(this).toggleClass("locked");
+  // })
+}
+
