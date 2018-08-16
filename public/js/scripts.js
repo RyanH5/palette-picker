@@ -1,10 +1,17 @@
 const savePaletteBtn = document.getElementById("palette--save-btn");
 const colorPossibilities = document.querySelectorAll('.color--palette-possibility');
-var colorList = []
+var colorList = [ {'saved': false}, 
+                  {'saved': false},
+                  {'saved': false},
+                  {'saved': false},
+                  {'saved': false}
+                ]
 
 window.onload = createColorPalette();
 $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
+$("#project--save-btn").on("click", saveProject);
+// $('#project--naming-input').on("keyup", toggleBtn)
 
 function generateRandomColor() {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
@@ -19,25 +26,72 @@ function generateRandomColor() {
 }
 
 function createColorPalette(event) {
-  colorList = [];
   const colorHexs = document.querySelectorAll('.color-hex');
   for(var i = 0; i < 5; i++) {
-    let newColor = generateRandomColor();
-      colorList.push({
+    if (!colorList[i]['saved']) {
+      let newColor = generateRandomColor();
+      colorList[i] = {
         color: newColor,
         saved: false
-      });
+      };
       $('.color--palette-possibility')[i].style.backgroundColor = colorList[i].color;
       colorHexs[i].innerHTML = colorList[i].color;
     }
+  }
 }
 
 function storeSelectedColor(event) {
   colorList.forEach(color => {
     if (color.color === event.target.innerText) {
-      $(this).children('.lock').toggleClass('locked')
+      $(this).children('.lock').toggleClass('locked');
       color.saved = !color.saved
     }
   });
 }
 
+function saveProject(event) {
+  // const theColors = colorList.map(color => {
+    $('#saved--projects').prepend(`
+    <article>
+      <h3 class="project--title">${$('#project--naming-input').val()}</h3>
+      <ul class="project-splotches">
+        <li class="splotchOne"></li>
+        <li class="splotchTwo"></li>
+        <li class="splotchThree"></li>
+        <li class="splotchFour"></li>
+        <li class="splotchFive"></li>
+      </ul>
+      <i class="fas fa-trash-alt"></i>
+    </article>`)
+  // })
+  event.preventDefault();
+
+  // iterate through li's and apply background style as colorList.color
+
+  // $('.project-splotches').map(li => {
+  //   console.log(li)
+  // })
+  const projectName = $('#project--naming-input').val();
+  addProjectToSelect(projectName);
+  $('#project--naming-input').val('');
+}
+
+// add select tag options on click of projectSave
+
+function addProjectToSelect(chars) {
+  const projectName = $('#project--naming-input').val();  
+  $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
+}
+
+// somehow I dont know how to disable a fucking button
+// function toggleBtn() {
+//     if ($('#project--naming-input').val() === '') {
+//         $('#save--projects').prop('disabled', true);
+//     } else {
+//         $('#save--projects').prop('disabled', false);
+//     }
+// };
+
+function displayProjectSplotches() {
+
+}

@@ -12,7 +12,7 @@ app.listen(app.get('port', () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 }));
 
-// app.locals.messages = [
-//   { id: 'a1', message: 'Hello World' },
-//   { id: 'b2', message: 'Goodbye World' }
-// ];
+app.locals.messages = [
+  { id: 'a1', message: 'Hello World' },
+  { id: 'b2', message: 'Goodbye World' }
+];
