@@ -45,6 +45,7 @@ header {
   bottom: 3px;
   right: 0;
   height: 25px;
+  pointer-events: none;
 }
 
 .locked {
