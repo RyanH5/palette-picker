@@ -69,3 +69,4 @@ app.listen(app.get('port'), () => {
   console.log(`PalettePicker is running on ${app.get('port')}.`);
 });
 
+module.exports = app;
