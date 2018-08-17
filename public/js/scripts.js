@@ -1,4 +1,3 @@
-// const savePaletteBtn = document.getElementById("palette--save-btn");
 const colorPossibilities = document.querySelectorAll('.color--palette-possibility');
 var colorList = [ {'saved': false}, 
                   {'saved': false},
@@ -57,7 +56,7 @@ function savePallete(event) {
 }
 
 function saveProject(event) {
-  // const theColors = colorList.map(color => {
+  event.preventDefault();
     $('#saved--projects').prepend(`
     <article>
       <h3 class="project--title">${$('#project--naming-input').val()}</h3>
@@ -70,18 +69,33 @@ function saveProject(event) {
       </ul>
       <i class="fas fa-trash-alt"></i>
     </article>`)
-  // })
-  event.preventDefault();
-
-  // iterate through li's and apply background style as colorList.color
-
-  // $('.project-splotches').map(li => {
-  //   console.log(li)
-  // })
   const projectName = $('#project--naming-input').val();
   addProjectToSelect(projectName);
   $('#project--naming-input').val('');
+  postProjectToDb(projectName)
 }
+
+// async function fetchProjects() {
+//   const response = await fetch('/api/v1/palettes');
+//   const projects = await response.json();
+//   return projects;
+// }
+
+function postProjectToDb(newProject) {
+  const url = 'http://localhost:3000/api/v1/projects/';
+  fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({name: newProject}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => console.log(response.json()))
+    .catch(function (error) {
+      console.log(error.messege)
+    });
+};
+
 
 // add select tag options on click of projectSave
 
@@ -90,16 +104,7 @@ function addProjectToSelect(chars) {
   $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
 }
 
-// somehow I dont know how to disable a fucking button
-// function toggleBtn() {
-//     if ($('#project--naming-input').val() === '') {
-//         $('#save--projects').prop('disabled', true);
-//     } else {
-//         $('#save--projects').prop('disabled', false);
-//     }
-// };
-
-function displayProjectPalette() {
-  const paletteColors = savePallete();
-  console.log(paletteColors)
-}
+// function displayProjectPalette() {
+//   const paletteColors = savePallete();
+//   console.log(paletteColors)
+// }
