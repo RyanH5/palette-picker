@@ -6,11 +6,12 @@ var colorList = [ {'saved': false},
                   {'saved': false}
                 ]
 
-window.onload = createColorPalette();
+window.onload = createColorPalette()
+window.onload = fetchProjects();
 $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
 $("#project--save-btn").on("click", saveProject);
-$("#palette--save-btn").on("click", savePallete);
+$("#palette--save-btn").on("click", savePalette);
 
 function generateRandomColor() {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
@@ -48,12 +49,21 @@ function storeSelectedColor(event) {
   });
 }
 
-function savePallete(event) {
+function savePalette(event) {
   event.preventDefault();
-  const projectPalette = colorList.filter(colorSplotch => {
+  const lockedColors = colorList.filter(colorSplotch => {
     return colorSplotch.saved === true
   })
-}
+
+    const palette = {
+      color1: lockedColors[0].color,
+      color2: lockedColors[1].color,
+      color3: lockedColors[2].color,
+      color4: lockedColors[3].color,
+      color5: lockedColors[4].color
+    }
+    console.log(palette)
+  }
 
 function saveProject(event) {
   event.preventDefault();
@@ -72,39 +82,57 @@ function saveProject(event) {
   const projectName = $('#project--naming-input').val();
   addProjectToSelect(projectName);
   $('#project--naming-input').val('');
-  postProjectToDb(projectName)
+  postProject(projectName)
 }
 
-// async function fetchProjects() {
-//   const response = await fetch('/api/v1/palettes');
-//   const projects = await response.json();
-//   return projects;
-// }
+async function fetchProjects() {
+  // empty display area
+  const response = await fetch('http://localhost:3000/api/v1/projects');
+  const projects = await response.json();
+  projects.forEach(project => {
+    $('#saved--projects').prepend(`
+    <article>
+      <h3 class="project--title">${project.name}</h3>
+      <ul class="project-splotches">
+        <li class="splotchOne"></li>
+        <li class="splotchTwo"></li>
+        <li class="splotchThree"></li>
+        <li class="splotchFour"></li>
+        <li class="splotchFive"></li>
+      </ul>
+      <i class="fas fa-trash-alt"></i>
+    </article>`),
+    $('select').append(`<option value=${project.name}>${project.name}</option>`)
+})
+  // });
+  // return projects;
+}
 
-function postProjectToDb(newProject) {
+async function postProject(newProject) {
   const url = 'http://localhost:3000/api/v1/projects/';
-  fetch(url, {
+  const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({name: newProject}),
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(response => console.log(response.json()))
-    .catch(function (error) {
-      console.log(error.messege)
-    });
+  const projectData = await response.json();
 };
 
-
-// add select tag options on click of projectSave
+async function postPalette(newProject) {
+  const url = 'http://localhost:3000/api/v1/palettes/';
+  const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({name: newProject}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  const paletteData = await response.json();
+};
 
 function addProjectToSelect(chars) {
   const projectName = $('#project--naming-input').val();  
   $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
 }
-
-// function displayProjectPalette() {
-//   const paletteColors = savePallete();
-//   console.log(paletteColors)
-// }
