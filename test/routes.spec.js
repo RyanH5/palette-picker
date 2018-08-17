@@ -30,7 +30,6 @@ describe('POST /api/v1/projects', () => {
       })
       .end((err, response) => {
         response.should.have.status(201);
-        // response.body.should.be.json;
         response.body.should.be.a('object');
         done();
       });
