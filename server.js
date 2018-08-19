@@ -30,44 +30,68 @@ app.post('/api/v1/projects', (request, response) => {
     });
 });
 
-app.get('/api/v1/projects', (request, response) => {
-  database('projects').select()
-    .then((projects) => {
-      response.status(200).json(projects)
-    })
-    .catch((error) => {
-      response.status(500).json({ error })
-    });
-});
 
-app.post('api/v1/palettes', (request, response) => {
+app.post('/api/v1/palettes', (request, response) => {
+  console.log(request.body['project_id'])
   if(!request.body.name) {
     return response.status(422).send({Error: "Must provide palette name"})
   }
 
-  database('palettes').insert(request.body, ['id', 'name', 'color1', 'color2', 'color3', 'color4', 'color5', 'project_id'])
-    .then(palette => {
-      response.status(201).json({
-        new_palette: palette[0]
+  database('projects').where({'name':request.body['project_id']}).select('id')
+  .then(id => {
+      request.body['project_id'] = id[0]['id']
+      database('palettes').insert(request.body, ['id', 'name', 'color1', 'color2', 'color3', 'color4', 'color5', 'project_id'])
+      .then(palette => {
+          response.status(201).json({
+            new_palette: palette[0]
+          })
+        })
+        .catch(error => {
+          console.log('second')
+          response.status(500).json({ error })
+        })
       })
-    })
-    .catch(error => {
-      response.status(500).json({ error })
-    })
+  .catch(error => {
+    console.log('first')
+    response.status(500).json({ error })
+  })
 })
 
-app.get('/api/v1/palettes', (request, response) => {
-  database('palettes').select()
+
+  
+  // database('palettes').insert(request.body, ['id', 'name', 'color1', 'color2', 'color3', 'color4', 'color5', 'project_id'])
+  // .then(palette => {
+  //     response.status(201).json({
+  //       new_palette: palette[0]
+  //     })
+  //   })
+  //   .catch(error => {
+  //     response.status(500).json({ error })
+  //   })
+  // })
+
+  app.get('/api/v1/palettes', (request, response) => {
+    database('palettes').select()
     .then((palettes) => {
       response.status(200).json(palettes)
     })
     .catch((error) => {
       response.status(500).json({ error })
     });
-});
-
-app.listen(app.get('port'), () => {
-  console.log(`PalettePicker is running on ${app.get('port')}.`);
-});
+  });
+  
+  app.listen(app.get('port'), () => {
+    console.log(`PalettePicker is running on ${app.get('port')}.`);
+  });
+  
+  app.get('/api/v1/projects', (request, response) => {
+    database('projects').select()
+      .then((projects) => {
+        response.status(200).json(projects)
+      })
+      .catch((error) => {
+        response.status(500).json({ error })
+      });
+  });
 
 module.exports = app;

@@ -52,17 +52,20 @@ function storeSelectedColor(event) {
 function savePalette(event) {
   event.preventDefault();
   const lockedColors = colorList.filter(colorSplotch => {
-    return colorSplotch.saved === true
+    return colorSplotch.saved === true;
   })
 
     const palette = {
+      name: $('#palette--naming-input').val(),
       color1: lockedColors[0].color,
       color2: lockedColors[1].color,
       color3: lockedColors[2].color,
       color4: lockedColors[3].color,
-      color5: lockedColors[4].color
+      color5: lockedColors[4].color,
+      project_id: $('#projects--dropdown').val()
     }
     console.log(palette)
+    postPalette(palette)
   }
 
 function saveProject(event) {
@@ -114,21 +117,25 @@ async function postProject(newProject) {
       method: 'POST',
       body: JSON.stringify({name: newProject}),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
       }
     })
   const projectData = await response.json();
 };
 
-async function postPalette(newProject) {
+async function postPalette(newPalette) {
+  console.log(newPalette)
   const url = 'http://localhost:3000/api/v1/palettes/';
   const response = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify({name: newProject}),
+      body: JSON.stringify(newPalette),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
       }
     })
+    console.log(response)
   const paletteData = await response.json();
 };
 
