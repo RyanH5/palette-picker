@@ -32,7 +32,6 @@ app.post('/api/v1/projects', (request, response) => {
 
 
 app.post('/api/v1/palettes', (request, response) => {
-  console.log(request.body['project_id'])
   if(!request.body.name) {
     return response.status(422).send({Error: "Must provide palette name"})
   }
@@ -47,31 +46,23 @@ app.post('/api/v1/palettes', (request, response) => {
           })
         })
         .catch(error => {
-          console.log('second')
           response.status(500).json({ error })
         })
       })
   .catch(error => {
-    console.log('first')
     response.status(500).json({ error })
   })
-})
-
-
-  
-  // database('palettes').insert(request.body, ['id', 'name', 'color1', 'color2', 'color3', 'color4', 'color5', 'project_id'])
-  // .then(palette => {
-  //     response.status(201).json({
-  //       new_palette: palette[0]
-  //     })
-  //   })
-  //   .catch(error => {
-  //     response.status(500).json({ error })
-  //   })
-  // })
+});
 
   app.get('/api/v1/palettes', (request, response) => {
-    database('palettes').select()
+    database('palettes').join('projects', 'palettes.project_id', '=',  'projects.id').select('projects.name as project_name',
+                          'palettes.name as palette_name',
+                          'color1',
+                          'color2',
+                          'color3',
+                          'color4',
+                          'color5'
+                        )
     .then((palettes) => {
       response.status(200).json(palettes)
     })

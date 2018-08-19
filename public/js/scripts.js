@@ -8,6 +8,7 @@ var colorList = [ {'saved': false},
 
 window.onload = createColorPalette()
 window.onload = fetchProjects();
+window.onload = fetchProjectPalettes();
 $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
 $("#project--save-btn").on("click", saveProject);
@@ -51,22 +52,17 @@ function storeSelectedColor(event) {
 
 function savePalette(event) {
   event.preventDefault();
-  const lockedColors = colorList.filter(colorSplotch => {
-    return colorSplotch.saved === true;
-  })
-
-    const palette = {
-      name: $('#palette--naming-input').val(),
-      color1: lockedColors[0].color,
-      color2: lockedColors[1].color,
-      color3: lockedColors[2].color,
-      color4: lockedColors[3].color,
-      color5: lockedColors[4].color,
-      project_id: $('#projects--dropdown').val()
-    }
-    console.log(palette)
-    postPalette(palette)
+  const palette = {
+    name: $('#palette--naming-input').val(),
+    color1: colorList[0].color,
+    color2: colorList[1].color,
+    color3: colorList[2].color,
+    color4: colorList[3].color,
+    color5: colorList[4].color,
+    project_id: $('#projects--dropdown').val()
   }
+  postPalette(palette)
+}
 
 function saveProject(event) {
   event.preventDefault();
@@ -111,6 +107,19 @@ async function fetchProjects() {
   // return projects;
 }
 
+async function fetchProjectPalettes() {
+  const response = await fetch('http://localhost:3000/api/v1/palettes');
+  const palettes = await response.json();
+  console.log(palettes)
+  const paletteByProject = palettes.reduce((projects, palette) => {
+    if (!projects[palette.palette_name]) {
+      projects[palette.palette_name] = []
+    } 
+    // console.log(projects)
+    return projects;
+  }, {})
+}
+
 async function postProject(newProject) {
   const url = 'http://localhost:3000/api/v1/projects/';
   const response = await fetch(url, {
@@ -125,7 +134,6 @@ async function postProject(newProject) {
 };
 
 async function postPalette(newPalette) {
-  console.log(newPalette)
   const url = 'http://localhost:3000/api/v1/palettes/';
   const response = await fetch(url, {
       method: 'POST',
@@ -135,7 +143,6 @@ async function postPalette(newPalette) {
         'Accept': 'application/json'
       }
     })
-    console.log(response)
   const paletteData = await response.json();
 };
 
