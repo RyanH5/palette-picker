@@ -61,24 +61,26 @@ function savePalette(event) {
     color5: colorList[4].color,
     project_id: $('#projects--dropdown').val()
   }
-  postPalette(palette)
+  postPalette(palette);
+  $('#colpickerproject_' + $('#projects--dropdown').val()).append(`
+      <article>
+        <h3 class="palette--title">${$('#palette--naming-input').val()}</h3>
+        <ul class="palette-splotches">
+          <li style='background-color:${colorList[0].color}' class="splotch"></li>
+          <li style='background-color:${colorList[1].color}' class="splotch"></li>
+          <li style='background-color:${colorList[2].color}' class="splotch"></li>
+          <li style='background-color:${colorList[3].color}' class="splotch"></li>
+          <li style='background-color:${colorList[4].color}' class="splotch"></li>
+        </ul>
+        <i class="fas fa-trash-alt"></i>
+      </article>`);
 }
 
 function saveProject(event) {
   event.preventDefault();
-    $('#saved--projects').prepend(`
-    <article>
-      <h3 class="project--title">${$('#project--naming-input').val()}</h3>
-      <ul class="project-splotches">
-        <li class="splotchOne"></li>
-        <li class="splotchTwo"></li>
-        <li class="splotchThree"></li>
-        <li class="splotchFour"></li>
-        <li class="splotchFive"></li>
-      </ul>
-      <i class="fas fa-trash-alt"></i>
-    </article>`)
   const projectName = $('#project--naming-input').val();
+    $('#colpickerproject_' + projectName).prepend(`
+    <div id=colpickerproject_${projectName}><h2 class="project-name">${projectName}</h2></div>`)
   addProjectToSelect(projectName);
   $('#project--naming-input').val('');
   postProject(projectName);
@@ -104,7 +106,14 @@ async function fetchProjects() {
         </ul>
         <i class="fas fa-trash-alt"></i>
       </article>`);
-      $('select').append(`<option value=${palette.project_name}>${palette.project_name}</option>`)
+
+      const project_names = []
+      $('select option').each(function() { 
+        project_names.push( $(this).attr('value') );
+      });
+      if (!project_names.includes(palette.project_name)) {
+        $('select').append(`<option value=${palette.project_name}>${palette.project_name}</option>`)
+      }
   })
   })
 }
