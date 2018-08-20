@@ -86,4 +86,17 @@ app.post('/api/v1/palettes', (request, response) => {
       });
   });
 
+  app.post('/api/v1/palettes/delete', (request, response) => {
+    console.log('sdfdsfsfs')
+    database('palettes').where('id', request.id).del()
+    .then(id => {
+      response.status(200).json(id)
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+  });
+
+
+
 module.exports = app;

@@ -120,3 +120,33 @@ hr {
   font-size: 24px;
   font-weight: 400
 }
+
+.saved--projects {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.project-container {
+  width: 33%;
+}
+
+.palette_article {
+  display: flex;
+  position: relative;
+}
+
+.palette--title {
+  margin: auto;
+  position: absolute;
+  top: 10px;
+}
+
+.palette-splotches {
+  display: flex;
+  margin-top: 28px;
+}
+
+.fas {
+  margin: 42px 10px;
+}

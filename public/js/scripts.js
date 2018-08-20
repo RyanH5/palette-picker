@@ -12,7 +12,7 @@ $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
 $("#project--save-btn").on("click", saveProject);
 $("#palette--save-btn").on("click", savePalette);
-$("#saved--projects").on("click", $(".fas"), deletePalette);
+$("#saved--projects").on("click", ".fas", deletePalette);
 
 function generateRandomColor() {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
@@ -92,11 +92,10 @@ async function fetchProjects() {
   const sortedPalettes = groupPalettesByProject(palettes);
   const projectNames = Object.keys(sortedPalettes);
   projectNames.forEach(name => {
-    $('#saved--projects').prepend(`<div id=colpickerproject_${name}><h2 class="project-name">${name}</h2></div>`)
+    $('#saved--projects').prepend(`<div class ="project-container"id=colpickerproject_${name}><h2 class="project-name">${name}</h2></div>`)
     sortedPalettes[name].forEach(palette => {
-      console.log(palette)
       $('#colpickerproject_' + palette.project_name).append(`
-      <article id='palette_${palette.palette_id}'>
+      <article id='palette_${palette.palette_id}' class='palette_article'>
         <h3 class="palette--title">${palette.palette_name}</h3>
         <ul class="palette-splotches">
           <li style='background-color:${palette.color1}' class="splotch"></li>
@@ -153,7 +152,7 @@ async function postPalette(newPalette) {
       }
     })
   const paletteData = await response.json();
-  return paletteData.id 
+  return paletteData.new_palette.id 
 };
 
 function addProjectToSelect(chars) {
@@ -161,9 +160,18 @@ function addProjectToSelect(chars) {
   $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
 }
 
-function deletePalette(event) {
+async function deletePalette(event) {
+  // const id = $(event.target).parent().attr('id').split('palette_')[1]
+  // const url = 'http://localhost:3000/api/v1/palettes/delete';
+  // const response = await fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(id),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       'Accept': 'application/json'
+  //     }
+  //   })
   $(event.target.closest('article')).remove();
-  console.log($(event.target.closest('article').children[0]))
 }
 
 // function deletePaletteFromDB() {
