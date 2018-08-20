@@ -123,6 +123,21 @@ app.post('/api/v1/palettes', (request, response) => {
     })
   });
 
+  app.delete('/api/v1/palettes', (request, response) => {             
+    // route handler for a DELETE request to /palettes
+    console.log('heyyyyyyyyyyyy')
+    const { id } = request.body                                       
+    database('palettes')                                              
+      .where({ 'id': id })                                            
+      .del()                                                          
+      .then((palette) => {                                            
+        response.status(204).json(palette)                           
+      })              
+      .catch((error) => {             
+        response.status(500).json({ error })                          
+      })
+  })
+
 
 
 module.exports = app;

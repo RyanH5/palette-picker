@@ -161,19 +161,15 @@ function addProjectToSelect(chars) {
 }
 
 async function deletePalette(event) {
-  // const id = $(event.target).parent().attr('id').split('palette_')[1]
-  // const url = 'http://localhost:3000/api/v1/palettes/delete';
-  // const response = await fetch(url, {
-  //     method: 'POST',
-  //     body: JSON.stringify(id),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       'Accept': 'application/json'
-  //     }
-  //   })
+  const id = {'id': $(event.target).parent().attr('id').split('palette_')[1]}
+  const url = 'http://localhost:3000/api/v1/palettes';
+  const response = await fetch(url, {
+      method: 'DELETE',
+      body: JSON.stringify(id),
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
+      }
+    })
   $(event.target.closest('article')).remove();
 }
-
-// function deletePaletteFromDB() {
-//   const url 
-// }
