@@ -125,16 +125,20 @@ app.post('/api/v1/palettes', (request, response) => {
 
   app.delete('/api/v1/palettes', (request, response) => {             
     // route handler for a DELETE request to /palettes
-    console.log('heyyyyyyyyyyyy')
     const { id } = request.body                                       
-    database('palettes')                                              
-      .where({ 'id': id })                                            
-      .del()                                                          
-      .then((palette) => {                                            
+    database('palettes')     
+    // target palettes table
+      .where({ 'id': id })   
+      // find the id passed in from request
+      .del()     
+        // delete that row
+      .then((palette) => {    
+        // success 
         response.status(204).json(palette)                           
       })              
-      .catch((error) => {             
-        response.status(500).json({ error })                          
+      .catch((error) => {   
+        // failure           
+        response.status(500).json({ error })   
       })
   })
 
