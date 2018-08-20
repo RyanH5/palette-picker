@@ -8,7 +8,7 @@ var colorList = [ {'saved': false},
 
 window.onload = createColorPalette()
 window.onload = fetchProjects();
-window.onload = fetchProjectPalettes();
+// window.onload = fetchProjectPalettes();
 $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
 $("#project--save-btn").on("click", saveProject);
@@ -81,41 +81,40 @@ function saveProject(event) {
   const projectName = $('#project--naming-input').val();
   addProjectToSelect(projectName);
   $('#project--naming-input').val('');
-  postProject(projectName)
+  postProject(projectName);
 }
 
 async function fetchProjects() {
-  // empty display area
-  const response = await fetch('http://localhost:3000/api/v1/projects');
-  const projects = await response.json();
-  projects.forEach(project => {
-    $('#saved--projects').prepend(`
-    <article>
-      <h3 class="project--title">${project.name}</h3>
-      <ul class="project-splotches">
-        <li class="splotchOne"></li>
-        <li class="splotchTwo"></li>
-        <li class="splotchThree"></li>
-        <li class="splotchFour"></li>
-        <li class="splotchFive"></li>
-      </ul>
-      <i class="fas fa-trash-alt"></i>
-    </article>`),
-    $('select').append(`<option value=${project.name}>${project.name}</option>`)
-})
-  // });
-  // return projects;
-}
-
-async function fetchProjectPalettes() {
   const response = await fetch('http://localhost:3000/api/v1/palettes');
   const palettes = await response.json();
-  console.log(palettes)
-  const paletteByProject = palettes.reduce((projects, palette) => {
-    if (!projects[palette.palette_name]) {
-      projects[palette.palette_name] = []
+  const sortedPalettes = groupPalettesByProject(palettes);
+  const projectNames = Object.keys(sortedPalettes);
+  projectNames.forEach(name => {
+    $('#saved--projects').prepend(`<div id=colpickerproject_${name}><h2 class="project-name">${name}</h2></div>`)
+    sortedPalettes[name].forEach(palette => {
+      $('#colpickerproject_' + palette.project_name).append(`
+      <article>
+        <h3 class="palette--title">${palette.palette_name}</h3>
+        <ul class="palette-splotches">
+          <li style='background-color:${palette.color1}' class="splotch"></li>
+          <li style='background-color:${palette.color2}' class="splotch"></li>
+          <li style='background-color:${palette.color3}' class="splotch"></li>
+          <li style='background-color:${palette.color4}' class="splotch"></li>
+          <li style='background-color:${palette.color5}' class="splotch"></li>
+        </ul>
+        <i class="fas fa-trash-alt"></i>
+      </article>`);
+      $('select').append(`<option value=${palette.project_name}>${palette.project_name}</option>`)
+  })
+  })
+}
+
+function groupPalettesByProject(palettes) {
+  return palettes.reduce((projects, palette) => {
+    if (!projects[palette.project_name]) {
+      projects[palette.project_name] = []
     } 
-    // console.log(projects)
+    projects[palette.project_name].push(palette)
     return projects;
   }, {})
 }
@@ -150,3 +149,4 @@ function addProjectToSelect(chars) {
   const projectName = $('#project--naming-input').val();  
   $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
 }
+
