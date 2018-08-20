@@ -57,11 +57,12 @@ app.post('/api/v1/palettes', (request, response) => {
   app.get('/api/v1/palettes', (request, response) => {
     database('palettes').join('projects', 'palettes.project_id', '=',  'projects.id').select('projects.name as project_name',
                           'palettes.name as palette_name',
-                          'color1',
-                          'color2',
-                          'color3',
-                          'color4',
-                          'color5'
+                          'palettes.color1',
+                          'palettes.color2',
+                          'palettes.color3',
+                          'palettes.color4',
+                          'palettes.color5',
+                          'palettes.id as palette_id'
                         )
     .then((palettes) => {
       response.status(200).json(palettes)
