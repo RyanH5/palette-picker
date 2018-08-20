@@ -12,6 +12,7 @@ $("#palette--generator-btn").on("click", createColorPalette);
 colorPossibilities.forEach(color => color.addEventListener("click", storeSelectedColor));
 $("#project--save-btn").on("click", saveProject);
 $("#palette--save-btn").on("click", savePalette);
+$("#saved--projects").on("click", ".fas", deletePalette);
 
 function generateRandomColor() {
   var hexValues = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E", "F"];
@@ -49,63 +50,82 @@ function storeSelectedColor(event) {
   });
 }
 
-function savePalette(event) {
+async function savePalette(event) {
   event.preventDefault();
-  const lockedColors = colorList.filter(colorSplotch => {
-    return colorSplotch.saved === true
-  })
-
-    const palette = {
-      color1: lockedColors[0].color,
-      color2: lockedColors[1].color,
-      color3: lockedColors[2].color,
-      color4: lockedColors[3].color,
-      color5: lockedColors[4].color
-    }
-    console.log(palette)
+  const palette = {
+    name: $('#palette--naming-input').val(),
+    color1: colorList[0].color,
+    color2: colorList[1].color,
+    color3: colorList[2].color,
+    color4: colorList[3].color,
+    color5: colorList[4].color,
+    project_id: $('#projects--dropdown').val()
   }
+  const palette_id = await postPalette(palette);
+  $('#colpickerproject_' + $('#projects--dropdown').val()).append(`
+      <article id='palette_${palette_id}'>
+        <h3 class="palette--title">${$('#palette--naming-input').val()}</h3>
+        <ul class="palette-splotches">
+          <li style='background-color:${colorList[0].color}' class="splotch"></li>
+          <li style='background-color:${colorList[1].color}' class="splotch"></li>
+          <li style='background-color:${colorList[2].color}' class="splotch"></li>
+          <li style='background-color:${colorList[3].color}' class="splotch"></li>
+          <li style='background-color:${colorList[4].color}' class="splotch"></li>
+        </ul>
+        <i class="fas fa-trash-alt"></i>
+      </article>`);
+}
 
 function saveProject(event) {
   event.preventDefault();
-    $('#saved--projects').prepend(`
-    <article>
-      <h3 class="project--title">${$('#project--naming-input').val()}</h3>
-      <ul class="project-splotches">
-        <li class="splotchOne"></li>
-        <li class="splotchTwo"></li>
-        <li class="splotchThree"></li>
-        <li class="splotchFour"></li>
-        <li class="splotchFive"></li>
-      </ul>
-      <i class="fas fa-trash-alt"></i>
-    </article>`)
   const projectName = $('#project--naming-input').val();
+    $('#colpickerproject_' + projectName).prepend(`
+    <div id=colpickerproject_${projectName}><h2 class="project-name">${projectName}</h2></div>`)
   addProjectToSelect(projectName);
   $('#project--naming-input').val('');
-  postProject(projectName)
+  postProject(projectName);
 }
 
 async function fetchProjects() {
-  // empty display area
-  const response = await fetch('http://localhost:3000/api/v1/projects');
-  const projects = await response.json();
-  projects.forEach(project => {
-    $('#saved--projects').prepend(`
-    <article>
-      <h3 class="project--title">${project.name}</h3>
-      <ul class="project-splotches">
-        <li class="splotchOne"></li>
-        <li class="splotchTwo"></li>
-        <li class="splotchThree"></li>
-        <li class="splotchFour"></li>
-        <li class="splotchFive"></li>
-      </ul>
-      <i class="fas fa-trash-alt"></i>
-    </article>`),
-    $('select').append(`<option value=${project.name}>${project.name}</option>`)
-})
-  // });
-  // return projects;
+  const response = await fetch('http://localhost:3000/api/v1/palettes');
+  const palettes = await response.json();
+  const sortedPalettes = groupPalettesByProject(palettes);
+  const projectNames = Object.keys(sortedPalettes);
+  projectNames.forEach(name => {
+    $('#saved--projects').prepend(`<div class ="project-container"id=colpickerproject_${name}><h2 class="project-name">${name}</h2></div>`)
+    sortedPalettes[name].forEach(palette => {
+      $('#colpickerproject_' + palette.project_name).append(`
+      <article id='palette_${palette.palette_id}' class='palette_article'>
+        <h3 class="palette--title">${palette.palette_name}</h3>
+        <ul class="palette-splotches">
+          <li style='background-color:${palette.color1}' class="splotch"></li>
+          <li style='background-color:${palette.color2}' class="splotch"></li>
+          <li style='background-color:${palette.color3}' class="splotch"></li>
+          <li style='background-color:${palette.color4}' class="splotch"></li>
+          <li style='background-color:${palette.color5}' class="splotch"></li>
+        </ul>
+        <i class="fas fa-trash-alt"></i>
+      </article>`);
+
+      const project_names = []
+      $('select option').each(function() { 
+        project_names.push( $(this).attr('value') );
+      });
+      if (!project_names.includes(palette.project_name)) {
+        $('select').append(`<option value=${palette.project_name}>${palette.project_name}</option>`)
+      }
+  })
+  })
+}
+
+function groupPalettesByProject(palettes) {
+  return palettes.reduce((projects, palette) => {
+    if (!projects[palette.project_name]) {
+      projects[palette.project_name] = []
+    } 
+    projects[palette.project_name].push(palette)
+    return projects;
+  }, {})
 }
 
 async function postProject(newProject) {
@@ -114,25 +134,46 @@ async function postProject(newProject) {
       method: 'POST',
       body: JSON.stringify({name: newProject}),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
       }
     })
   const projectData = await response.json();
 };
 
-async function postPalette(newProject) {
+async function postPalette(newPalette) {
   const url = 'http://localhost:3000/api/v1/palettes/';
   const response = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify({name: newProject}),
+      body: JSON.stringify(newPalette),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
       }
     })
   const paletteData = await response.json();
+  return paletteData.new_palette.id 
 };
 
 function addProjectToSelect(chars) {
   const projectName = $('#project--naming-input').val();  
   $('select').append(`<option value=${projectName}>${$('#project--naming-input').val()}</option>`)
 }
+
+async function deletePalette(event) {
+  // const id = $(event.target).parent().attr('id').split('palette_')[1]
+  // const url = 'http://localhost:3000/api/v1/palettes/delete';
+  // const response = await fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(id),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       'Accept': 'application/json'
+  //     }
+  //   })
+  $(event.target.closest('article')).remove();
+}
+
+// function deletePaletteFromDB() {
+//   const url 
+// }

@@ -101,7 +101,7 @@ hr {
 
 .create--project-subheading {
   text-align: center;
-  color: #32292F;
+  color: #705D56;
   font-family: 'Gorditas', cursive;
   padding: 15px;
   font-size: 28px;
@@ -109,4 +109,44 @@ hr {
 
 .project--naming-input {
   padding: 9px 0px;
+}
+
+.splotch {
+  width: 50px;
+  height: 50px;
+}
+
+.project-name {
+  font-size: 24px;
+  font-weight: 400
+}
+
+.saved--projects {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.project-container {
+  width: 33%;
+}
+
+.palette_article {
+  display: flex;
+  position: relative;
+}
+
+.palette--title {
+  margin: auto;
+  position: absolute;
+  top: 10px;
+}
+
+.palette-splotches {
+  display: flex;
+  margin-top: 28px;
+}
+
+.fas {
+  margin: 42px 10px;
 }
