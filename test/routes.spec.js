@@ -8,7 +8,7 @@ const server = require('../server');
 chai.use(chaiHttp)
 
 describe('GET /api/v1/projects', () => {
-  it('should return all projects', done => {
+  it.skip('should return all projects', done => {
     chai.request(server)
       .get('/api/v1/projects')
       .end((err, response) => {
@@ -21,7 +21,7 @@ describe('GET /api/v1/projects', () => {
 });
 
 describe('GET /api/v1/palettes', () => {
-  it('should return all palettes', done => {
+  it.skip('should return all palettes', done => {
     chai.request(server)
       .get('/api/v1/palettes')
       .end((err, response) => {
@@ -34,7 +34,7 @@ describe('GET /api/v1/palettes', () => {
 });
 
 describe('POST /api/v1/projects', () => {
-  it('should create a new project', done => {
+  it.skip('should create a new project', done => {
     chai.request(server)
       .post('/api/v1/projects')
       .send({
