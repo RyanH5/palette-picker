@@ -4,13 +4,13 @@
 
 ### This is my first full stack application. User randomly generates colors. Locks selected colors, continue replacing unwanted colors. Then store them.
 
-### Desktop View
+## Desktop View
 <img src="Pal Picker Desktop.png"/>
-### Tablet View
+## Tablet View
 <img src="Pal Picker Tablet.png"/>
-### Mobile Form View
+## Mobile Form View
 <img src="Pal Picker Mobile Form.png"/>
-### Mobile Projects View
+## Mobile Projects View
 <img src="Pal Picker Mobile Projects.png"/>
 
 Tech stack:
