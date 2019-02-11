@@ -194,7 +194,7 @@ hr {
 
   header {
     position: fixed;
-    width: 100vw;
+    width: 100%;
     z-index: 1;
   }
 
@@ -204,6 +204,9 @@ hr {
 }
 
 @media screen and (max-width: 400px) {
+  .app--title{
+    font-size: 40px;
+  }
   .palette--naming-form {
     flex-direction: column;
     justify-content: space-around;
@@ -213,6 +216,7 @@ hr {
 
   .projects--dropdown {
     width: 100%;
+    margin-right: 0px;
   }
 
   .palette--naming-input {
