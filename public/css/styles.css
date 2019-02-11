@@ -118,7 +118,8 @@ hr {
 
 .project-name {
   font-size: 24px;
-  font-weight: 400
+  font-weight: 400;
+  text-align: center;
 }
 
 .saved--projects {
@@ -134,6 +135,7 @@ hr {
 .palette_article {
   display: flex;
   position: relative;
+  justify-content: center;
 }
 
 .palette--title {

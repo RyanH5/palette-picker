@@ -61,6 +61,8 @@ async function savePalette(event) {
     color5: colorList[4].color,
     project_id: $('#projects--dropdown').val()
   }
+  // const projects = await fetchProjects();
+  // console.log(projects)
   const palette_id = await postPalette(palette);
   $('#colpickerproject_' + $('#projects--dropdown').val()).append(`
       <article id='palette_${palette_id}'>
@@ -74,6 +76,7 @@ async function savePalette(event) {
         </ul>
         <i class="fas fa-trash-alt"></i>
       </article>`);
+      fetchProjects();
 }
 
 function saveProject(event) {
@@ -152,6 +155,7 @@ async function postPalette(newPalette) {
       }
     })
   const paletteData = await response.json();
+  console.log(paletteData);
   return paletteData.new_palette.id 
 };
 
