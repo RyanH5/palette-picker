@@ -1,8 +1,17 @@
-### palette-picker
+# palette-picker
 
 ## Ryan Harrington
 
-This is my first full stack application. Allows user to randomly generate colors. Lock selected colors, continue replacing colors not wanted. Then store them.
+### This is my first full stack application. User randomly generates colors. Locks selected colors, continue replacing unwanted colors. Then store them.
+
+### Desktop View
+<img src="Pal Picker Desktop.png"/>
+### Tablet View
+<img src="Pal Picker Tablet.png"/>
+### Mobile Form View
+<img src="Pal Picker Mobile Form.png"/>
+### Mobile Projects View
+<img src="Pal Picker Mobile Projects.png"/>
 
 Tech stack:
 JavaScript
@@ -11,9 +20,3 @@ Postgres
 Node.js
 Knex
 Express
-
-<img src="Pal Picker Desktop.png"/>
-<img src="Pal Picker Tablet.png"/>
-<img src="Pal Picker Mobile Form.png"/>
-<img src="Pal Picker Mobile Projects.png"/>
-
