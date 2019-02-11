@@ -12,8 +12,8 @@ Node.js
 Knex
 Express
 
-<img src="Pal Picker Desktop"/>
-<img src="Pal Picker Tablet"/>
-<img src="Pal Picker Mobile Form"/>
-<img src="Pal Picker Mobile Projects"/>
+<img src="Pal Picker Desktop.png"/>
+<img src="Pal Picker Tablet.png"/>
+<img src="Pal Picker Mobile Form.png"/>
+<img src="Pal Picker Mobile Projects.png"/>
 
