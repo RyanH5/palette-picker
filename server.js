@@ -103,7 +103,7 @@ app.post('/api/v1/palettes', (request, response) => {
   app.get('/api/v1/projects', (request, response) => {
     // route handler at /projects endpoint
     database('projects').select()
-    // get datat in projects table
+    // get data in projects table
       .then((projects) => {
         response.status(200).json(projects)
       })
@@ -125,7 +125,8 @@ app.post('/api/v1/palettes', (request, response) => {
 
   app.delete('/api/v1/palettes', (request, response) => {             
     // route handler for a DELETE request to /palettes
-    const { id } = request.body                                       
+    const { id } = request.body
+                                           
     database('palettes')     
     // target palettes table
       .where({ 'id': id })   
