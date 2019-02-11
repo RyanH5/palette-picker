@@ -155,7 +155,6 @@ async function postPalette(newPalette) {
       }
     })
   const paletteData = await response.json();
-  console.log(paletteData);
   return paletteData.new_palette.id 
 };
 

@@ -23,10 +23,12 @@ header {
 .color--palette-possibility {
   border: 2px solid #705D56;
   width: 20%;
-  max-width:150px;
+  width:150px;
   height: 150px;
   position: relative;
+  cursor: pointer;
 }
+
 
 .generator--btn-container {
   text-align: center;
@@ -118,8 +120,9 @@ hr {
 
 .project-name {
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 800;
   text-align: center;
+  color: #705D56;
 }
 
 .saved--projects {
@@ -142,6 +145,7 @@ hr {
   margin: auto;
   position: absolute;
   top: 10px;
+  color: #705D56;
 }
 
 .palette-splotches {
@@ -151,4 +155,68 @@ hr {
 
 .fas {
   margin: 42px 10px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 970px) { 
+  .project-container {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .color--splotches-container {
+    display: flex;
+    flex-direction: column;
+    padding: 90px 0px 10px;
+    align-items: center;
+  }
+
+  .color--palette-possibility {
+    border: 2px solid #705D56;
+    width: 90vw;
+    height: 50px;
+    position: relative;
+  }
+
+  .color--palette-possibility:hover .color-hex {
+    color: #F0F7F4;
+  }
+
+  .color-hex {
+    font-family: 'Kanit', sans-serif;
+    position: relative;
+    bottom: -3px;
+    left: 3px;
+    color: #705D56;
+  }
+
+  header {
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+  }
+
+  .project-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .palette--naming-form {
+    flex-direction: column;
+    justify-content: space-around;
+    width: 320px;
+    height: 115px;
+  }
+
+  .projects--dropdown {
+    width: 100%;
+  }
+
+  .palette--naming-input {
+    width: 98%;
+    height: 25px;
+  }
 }
